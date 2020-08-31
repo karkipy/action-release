@@ -1,0 +1,5 @@
+name: 'bhoos package action'
+description: 'action that updates version and pushes to master and the minor | patch version'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
