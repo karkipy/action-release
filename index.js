@@ -39,7 +39,7 @@ try {
   const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
   execSync(`git fetch origin`);
   execSync('git config pull.ff only');
-  execSync(`git tag next${nextVersion}`);
+  execSync(`git tag nextv1.1.0`);
   execSync('git push --tags');
   execSync(`git checkout -b temp`);
   execSync('git pull origin master')
