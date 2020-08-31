@@ -2409,7 +2409,7 @@ try {
   });
 
   // setup to release package
-  execSync(`echo "//npm.pkg.github.com/rchs/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
+  execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
   execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
   execSync(`npm publish`);
 
