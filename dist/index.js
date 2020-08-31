@@ -2405,7 +2405,7 @@ try {
   execSync(`git push origin temp:${branch}`);
   execSync(`git push origin temp:master`);
   createRelease(repoName, tagName, '', '').catch(e => {
-    if (e) throw 'Draft Release error';
+    if (e) throw `Draft Release error ${e}`;
   });
 
   // setup to release package
