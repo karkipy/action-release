@@ -1,5 +1,5 @@
 
-## Example USAHE
+## Example USAGE
 
     - name: Use bhoos action
         uses: actions/bhoos-package-action@v1
