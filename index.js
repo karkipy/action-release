@@ -38,7 +38,7 @@ try {
 
   const nextVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
   const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
-  const tagName = `next${nextVersion}`;
+  const tagName = `next v${nextVersion}`;
 
 
 
