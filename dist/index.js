@@ -2361,7 +2361,7 @@ const octokit = new Octokit({
 
 async function createRelease(repoName,tag, name, body) {
   await octokit.repos.createRelease({
-    owner: 'karkipy',
+    owner: 'bhoos',
     repo: repoName,
     tag_name: tag,
     name,
