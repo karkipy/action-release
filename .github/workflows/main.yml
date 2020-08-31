@@ -18,6 +18,8 @@ jobs:
           node-version: '10.x'
       - name: Setup package registry access
         uses: ./ # Uses an action in the root directory
+        env:
+          GITHUB_PERSONAL_ACCESS_TOKEN: ${{ github.token }}
       - name: check package
         run: |
           cat package.json
