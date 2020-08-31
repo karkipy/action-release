@@ -50,7 +50,7 @@ try {
   execSync(`git checkout -b temp`);
   execSync('git pull origin master');
   execSync(`git add -A`);
-  execSync(`git commit -m "${branch} updated"`);
+  execSync(`git commit -m "${branch} version updated"`);
   execSync(`git push origin temp:${branch}`);
   execSync(`git push origin temp:master`);
   createRelease(repoName, tagName, '', '').catch(e => {
