@@ -6,3 +6,8 @@
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/@actions/core/-/core-1.2.5.tgz#fa57bf8c07a38191e243beb9ea9d8368c1cb02c8"
   integrity sha512-mwpoNjHSWWh0IiALdDEQi3tru124JKn0yVNziIBzTME8QRv7thwoghVuT1jBRjFvdtoHsqD58IRHy1nf86paRg==
+
+octokit@^1.0.0-hello-world:
+  version "1.0.0-hello-world"
+  resolved "https://registry.yarnpkg.com/octokit/-/octokit-1.0.0-hello-world.tgz#997f22aeeb5dfe2881e78c69418c49281aadf98f"
+  integrity sha1-mX8irutd/iiB54xpQYxJKBqt+Y8=
