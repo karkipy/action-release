@@ -1,6 +1,7 @@
 
-## Example usage
+## Example USAHE
 
-uses: actions/bhoos-package-action@v1
-with:
-  who-to-greet: 'Mona the Octocat'
+    - name: Use bhoos action
+        uses: actions/bhoos-package-action@v1
+        env:
+          GITHUB_PERSONAL_ACCESS_TOKEN: ${{ github.token }}
