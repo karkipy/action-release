@@ -2,10 +2,15 @@
   "name": "bhoos-package-action",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "test": "echo test",
+    "build": "echo build"
+  },
   "repository": "git@github.com:karkipy/bhoos-package-action.git",
   "author": "Aashish Karki <aashish.y2z@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.3"
+    "@actions/core": "^1.2.3",
+    "@octokit/rest": "^18.0.4"
   }
 }
