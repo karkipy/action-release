@@ -1,0 +1,11 @@
+{
+  "name": "bhoos-package-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:karkipy/bhoos-package-action.git",
+  "author": "Aashish Karki <aashish.y2z@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.3"
+  }
+}
