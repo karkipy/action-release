@@ -40,7 +40,10 @@ try {
   const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
   const tagName = `next${nextVersion}`;
 
-
+  // setup to release package
+  execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
+  execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
+  execSync(`npm publish`);
 
   // add tags and push it
   execSync(`git tag ${tagName}`);
@@ -57,10 +60,7 @@ try {
     if (e) throw `Draft Release error ${e}`;
   });
 
-  // setup to release package
-  execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
-  execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
-  execSync(`npm publish`);
+
 
 }  catch (error) {
   core.setFailed(error.message);
