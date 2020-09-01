@@ -18,6 +18,6 @@
         .....
         .....
     - name: Use bhoos action
-        uses: actions/bhoos-package-action@v1
+        uses: actions/bhoos-package-action@{currentVersionofTag}
         env:
           GITHUB_PERSONAL_ACCESS_TOKEN: ${{ github.token }}
