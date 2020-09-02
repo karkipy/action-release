@@ -44,7 +44,7 @@ try {
     execSync('git config pull.ff only');
 
 
-    // push the updates from temp branch to both the current branch and master branch
+    // make sure the branch is upto date with master
     execSync(`git checkout -b temp`);
     execSync('git pull origin master');
     // update the version
@@ -63,6 +63,7 @@ try {
     const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
     const tagName = `v${nextVersion}`;
 
+     // push the updates from temp branch to both the current branch and master branch
     console.log(`....Pushing Changes to ${branch} branch....`);
     execSync(`git push origin temp:${branch}`);
 
