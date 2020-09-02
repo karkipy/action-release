@@ -20,23 +20,29 @@ async function createRelease(repoName,tag, name, body) {
   });
 }
 
+function getPackageProperty(property) {
+  return execSync(`node -p "require('./package.json').${property}"`).toString().trim();
+}
+
+function getRepoName() {
+  return execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
+}
+
 try {
-
-
   // check if draft has been released from master
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   const release = !!(payload.action && payload.action === 'released');
-  const packageName = execSync(`node -p "require('./package.json').name"`).toString().trim();
-
+  const packageName = getPackageProperty('name');
   if (release) {
-    const currentVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
-    console.log('....Remove next Tag from Package....');
+    const currentVersion = getPackageProperty('version');
     // remove next from current version of package
+    console.log('....Removing next Tag from Package....');
     execSync(`npm dist-tag rm ${packageName} next`);
 
-    console.log('....Adding latest Tag to Package....');
     // add latest tag to the current version of package
+    console.log('....Adding latest Tag to Package....');
     execSync(`npm dist-tag add ${packageName}@${currentVersion} latest`);
+
   } else {
 
     const branch = execSync('git branch --show-current').toString().trim();
@@ -61,9 +67,6 @@ try {
     execSync(`yarn build`);
     execSync(`yarn test`);
 
-    const nextVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
-    const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
-    const tagName = `v${nextVersion}`;
 
      // push the updates from temp branch to both the current branch and master branch
     console.log(`....Pushing Changes to ${branch} branch....`);
@@ -73,14 +76,16 @@ try {
     execSync(`git push origin temp:master`);
 
 
-
-
     // setup to release package
     execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
     execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
     console.log('....Publishing Package With Next Tag....');
     execSync(`npm publish --tag=next`);
 
+
+    // create a draft with a tag of version name with v suffix
+    const tagName = `v${getPackageProperty('version')}`;
+    const repoName = getRepoName();
 
     console.log('....Creating a release....');
     createRelease(repoName, tagName, '', '').catch(e => {
