@@ -73,16 +73,19 @@ try {
     execSync(`git push origin temp:master`);
 
 
-    console.log('....Creating a release....');
-    createRelease(repoName, tagName, '', '').catch(e => {
-      if (e) throw `Draft Release error ${e}`;
-    });
+
 
     // setup to release package
     execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
     execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
     console.log('....Publishing Package With Next Tag....');
     execSync(`npm publish --tag=next`);
+
+
+    console.log('....Creating a release....');
+    createRelease(repoName, tagName, '', '').catch(e => {
+      if (e) throw `Draft Release error ${e}`;
+    });
 
   }
 
