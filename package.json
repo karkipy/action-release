@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.3",
+    "@actions/github": "^4.0.0",
     "@octokit/rest": "^18.0.4"
   }
 }
