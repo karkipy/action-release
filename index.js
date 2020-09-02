@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const github = require('@actions/github');
 const { Octokit } = require('@octokit/rest');
 const { execSync } = require('child_process');
 
@@ -20,47 +21,67 @@ async function createRelease(repoName,tag, name, body) {
 }
 
 try {
+
+
+  // check if draft has been released from master
+  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  const release = !!(payload.action && payload.action === 'released');
+  if (release) {
+    // build the package and test it
+    execSync(`yarn`);
+    execSync(`yarn build`);
+    execSync(`yarn test`);
+    console.log('....Publishing Package....');
+    execSync(`npm publish`);
+  } else {
+
+    const branch = execSync('git branch --show-current').toString().trim();
+    // setup config for git
+    execSync(`git config --global user.email action@bhoos.com`);
+    execSync(`git config --global user.name 'Bhoos Action'`);
+
+    execSync(`git fetch origin`);
+    execSync('git config pull.ff only');
+
+
+    // push the updates from temp branch to both the current branch and master branch
+    execSync(`git checkout -b temp`);
+    execSync('git pull origin master');
+    // update the version
+    console.log(`....Updating npm version using ${branch}....`);
+    execSync(`npm version ${branch} -m "Release ${branch} version %s"`);
+
+
   // build the package and test it
-  execSync(`yarn`);
-  execSync(`yarn build`);
-  execSync(`yarn test`);
-
-  const branch = execSync('git branch --show-current').toString().trim();
+    execSync(`yarn`);
+    execSync(`yarn build`);
+    execSync(`yarn test`);
 
 
-  // setup config for git
-  execSync(`git config --global user.email action@bhoos.com`);
-  execSync(`git config --global user.name 'Bhoos Action'`);
-  execSync(`git fetch origin`);
-  execSync('git config pull.ff only');
-  // update the version
-  execSync(`npm version ${branch} --no-git-tag-version`);
 
-  const nextVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
-  const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
-  const tagName = `next${nextVersion}`;
+    const nextVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
+    const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
+    const tagName = `v${nextVersion}`;
 
-  // setup to release package
-  execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
-  execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
-  execSync(`npm publish`);
+    console.log(`....Pushing Changes to ${branch} branch....`);
+    execSync(`git push origin temp:${branch}`);
 
-  // add tags and push it
-  execSync(`git tag ${tagName}`);
-  execSync('git push --tags');
-
-  // push the updates from temp branch to both the current branch and master branch
-  execSync(`git checkout -b temp`);
-  execSync('git pull origin master');
-  execSync(`git add -A`);
-  execSync(`git commit -m "${branch} version updated"`);
-  execSync(`git push origin temp:${branch}`);
-  execSync(`git push origin temp:master`);
-  createRelease(repoName, tagName, '', '').catch(e => {
-    if (e) throw `Draft Release error ${e}`;
-  });
+    console.log('....Pushing Changes to master branch....');
+    execSync(`git push origin temp:master`);
 
 
+    console.log('....Creating a release....');
+    createRelease(repoName, tagName, '', '').catch(e => {
+      if (e) throw `Draft Release error ${e}`;
+    });
+
+    // setup to release package
+    execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
+    execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
+    console.log('....Publishing Package With Next Tag....');
+    execSync(`npm publish --tag next`);
+
+  }
 
 }  catch (error) {
   core.setFailed(error.message);
