@@ -3251,7 +3251,7 @@ try {
     // remove next from current version of package
     execSync(`npm dist-tag rm ${packageName} next`);
 
-    console.log('....Adding latest Tag from Package....');
+    console.log('....Adding latest Tag to Package....');
     // add latest tag to the current version of package
     execSync(`npm dist-tag add ${packageName}@${currentVersion} latest`);
   } else {
