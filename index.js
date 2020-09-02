@@ -35,12 +35,8 @@ try {
   const packageName = getPackageProperty('name');
   if (release) {
     const currentVersion = getPackageProperty('version');
-    // remove next from current version of package
-    console.log('....Removing next Tag from Package....');
-    execSync(`npm dist-tag rm ${packageName} next`);
-
     // add latest tag to the current version of package
-    console.log('....Adding latest Tag to Package....');
+    console.log('....Adding latest Tag to current version of Package....');
     execSync(`npm dist-tag add ${packageName}@${currentVersion} latest`);
 
   } else {
