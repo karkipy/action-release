@@ -3246,8 +3246,14 @@ try {
   const packageName = execSync(`node -p "require('./package.json').name"`).toString().trim();
 
   if (release) {
-    console.log('....Remove Tag from Package....');
+    const currentVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
+    console.log('....Remove next Tag from Package....');
+    // remove next from current version of package
     execSync(`npm dist-tag rm ${packageName} next`);
+
+    console.log('....Adding latest Tag from Package....');
+    // add latest tag to the current version of package
+    execSync(`npm dist-tag add ${packageName}@${currentVersion} latest`);
   } else {
 
     const branch = execSync('git branch --show-current').toString().trim();
@@ -3271,8 +3277,6 @@ try {
     execSync(`yarn`);
     execSync(`yarn build`);
     execSync(`yarn test`);
-
-
 
     const nextVersion = execSync(`node -p "require('./package.json').version"`).toString().trim();
     const repoName = execSync(`basename $(git remote get-url origin)`).toString().trim().split('.')[0];
