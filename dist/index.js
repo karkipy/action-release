@@ -3243,13 +3243,11 @@ try {
   // check if draft has been released from master
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   const release = !!(payload.action && payload.action === 'released');
+  const packageName = execSync(`node -p "require('./package.json').name"`).toString().trim();
+
   if (release) {
-    // build the package and test it
-    execSync(`yarn`);
-    execSync(`yarn build`);
-    execSync(`yarn test`);
-    console.log('....Publishing Package....');
-    execSync(`npm publish`);
+    console.log('....Remove Tag from Package....');
+    execSync(`npm dist-tag rm ${packageName} next`);
   } else {
 
     const branch = execSync('git branch --show-current').toString().trim();
@@ -3297,7 +3295,7 @@ try {
     execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
     execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
     console.log('....Publishing Package With Next Tag....');
-    execSync(`npm publish --tag next`);
+    execSync(`npm publish --tag=next`);
 
   }
 
