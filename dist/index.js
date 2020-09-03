@@ -3261,6 +3261,7 @@ try {
   // check if draft has been released from master
   const { payload } = github.context;
   const GITHUB_TOKEN = github.token;
+  console.log(github.token, github.context, github)
   const { repository, ref } = payload;
   const { html_url, name, full_name } = repository;
 
