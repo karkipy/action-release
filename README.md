@@ -23,13 +23,6 @@
     package-release:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
-          with:
-            fetch-depth: 0
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: '10.x'
         - name: Use Bhoos release action
           uses: bhoos/action-release@v{currentVersion}
           env:
