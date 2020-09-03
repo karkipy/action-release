@@ -5,7 +5,6 @@ const { execSync } = require('child_process');
 const { chdir } = require('process');
 
 const NPM_PKG_GITHUB_TOKEN = process.env.NPM_PKG_GITHUB_TOKEN;
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = process.env.PACKAGE_SCOPE || 'bhoos';
 
 async function createRelease(repoName,tag, name, body, token) {
@@ -39,6 +38,7 @@ try {
   const { payload } = github.context;
   const { repository, ref } = payload;
   const { html_url, name, full_name } = repository;
+  const GITHUB_TOKEN = core.getInput('token', { required: true });
 
   const firstName = full_name.split('/')[0];
   const gitURL = `https://${firstName}:${GITHUB_TOKEN}@github.com/${full_name}.git`;
@@ -87,9 +87,9 @@ try {
     // setup npm rc using read access from token
     setupNPMRC(NPM_PKG_GITHUB_TOKEN);
     // test and build
-    execSync(`npm install`);
-    execSync(`npm run test`);
-    execSync(`npm run build`);
+    execSync(`yarn install`);
+    execSync(`yarn run test`);
+    execSync(`yarn run build`);
 
 
      // push the updates from temp branch to both the current branch and master branch
