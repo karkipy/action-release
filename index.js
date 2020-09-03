@@ -75,9 +75,9 @@ try {
 
 
   // test and build
-    execSync(`yarn`);
-    execSync(`yarn test`);
-    execSync(`yarn build`);
+    execSync(`npm install`);
+    execSync(`npm run test`);
+    execSync(`npm run build`);
 
 
      // push the updates from temp branch to both the current branch and master branch
