@@ -28,6 +28,5 @@
           env:
             # use PERSONAL_ACCESS_TOKEN as secrets.GITHUB_TOKEN is limited to current repository
             NPM_PKG_GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-            GITHUB_TOKEN: ${{ github.token }}
 
 ```
