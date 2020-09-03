@@ -35,7 +35,7 @@
           env:
             # make sure github.token instead of personal access token is passed else there will be an infinite loop
             GITHUB_PERSONAL_ACCESS_TOKEN: ${{ github.token }}
-            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            NPM_PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            # use PERSONAL_ACCESS_TOKEN as secrets.GITHUB_TOKEN is limited to current repository
+            NODE_AUTH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
 ```
