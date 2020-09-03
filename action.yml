@@ -1,5 +1,10 @@
 name: 'bhoos package action'
 description: 'action that updates version and pushes to master and the minor | patch version'
+inputs:
+  token:
+    description: 'github token'
+    required: true
+    default: ${{ github.token }}
 runs:
   using: 'node12'
   main: 'dist/index.js'
