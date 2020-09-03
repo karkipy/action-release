@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const { chdir } = require('process');
 
 const NPM_PKG_GITHUB_TOKEN = process.env.NPM_PKG_GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = process.env.PACKAGE_SCOPE || 'bhoos';
 
 async function createRelease(repoName,tag, name, body, token) {
@@ -36,8 +37,6 @@ function setupNPMRC(token) {
 try {
   // check if draft has been released from master
   const { payload } = github.context;
-  const GITHUB_TOKEN = github.token;
-  console.log(github.token, github.context, github)
   const { repository, ref } = payload;
   const { html_url, name, full_name } = repository;
 
