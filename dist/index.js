@@ -3228,10 +3228,11 @@ const { Octokit } = __webpack_require__(320);
 const { execSync } = __webpack_require__(129);
 const { chdir } = __webpack_require__(765);
 
-const PERSONAL_ACCESS_TOKEN = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+const GITHUB_PERSONAL_ACCESS_TOKEN = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+const NPM_PERSONAL_ACCESS_TOKEN = process.env.NPM_PERSONAL_ACCESS_TOKEN;
 const OWNER = process.env.PACKAGE_SCOPE || 'bhoos';
 const octokit = new Octokit({
-  auth: PERSONAL_ACCESS_TOKEN,
+  auth: GITHUB_PERSONAL_ACCESS_TOKEN,
 });
 
 
@@ -3258,10 +3259,10 @@ try {
   const { html_url, name, full_name } = repository;
 
   const firstName = full_name.split('/')[0];
-  const gitURL = `https://${firstName}:${PERSONAL_ACCESS_TOKEN}@github.com/${full_name}.git`;
+  const gitURL = `https://${firstName}:${GITHUB_PERSONAL_ACCESS_TOKEN}@github.com/${full_name}.git`;
 
 
-  execSync(`curl -H 'Authorization: token ${PERSONAL_ACCESS_TOKEN}' ${html_url}`)
+  execSync(`curl -H 'Authorization: token ${GITHUB_PERSONAL_ACCESS_TOKEN}' ${html_url}`)
   execSync(`git config --global user.email action@bhoos.com`);
   execSync(`git config --global user.name 'Bhoos Action'`);
   execSync(`git clone ${gitURL}`)
@@ -3285,8 +3286,8 @@ try {
     execSync(`git pull origin ${branch}`);
 
     // setup  npmrc
-    execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
-    execSync(`echo "//npm.pkg.github.com/:_authToken=${PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
+    execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${NPM_PERSONAL_ACCESS_TOKEN}" > ~/.npmrc`);
+    execSync(`echo "//npm.pkg.github.com/:_authToken=${NPM_PERSONAL_ACCESS_TOKEN}" >> ~/.npmrc`);
     execSync(`echo "@${OWNER}:registry=https://npm.pkg.github.com/" >> ~/.npmrc`);
 
 
