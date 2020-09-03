@@ -48,6 +48,12 @@ try {
   execSync('git fetch --all');
   execSync('git pull --all');
 
+
+  // setup  npmrc
+  execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${NPM_PKG_GITHUB_TOKEN}" > ~/.npmrc`);
+  execSync(`echo "//npm.pkg.github.com/:_authToken=${NPM_PKG_GITHUB_TOKEN}" >> ~/.npmrc`);
+  execSync(`echo "@${OWNER}:registry=https://npm.pkg.github.com/" >> ~/.npmrc`);
+
   const release = payload.action && payload.action === 'published';
   if (release) {
     const packageName = getPackageProperty('name');
@@ -61,10 +67,6 @@ try {
     const branch = ref.split('/')[2];
     execSync(`git pull origin ${branch}`);
 
-    // setup  npmrc
-    execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${NPM_PKG_GITHUB_TOKEN}" > ~/.npmrc`);
-    execSync(`echo "//npm.pkg.github.com/:_authToken=${NPM_PKG_GITHUB_TOKEN}" >> ~/.npmrc`);
-    execSync(`echo "@${OWNER}:registry=https://npm.pkg.github.com/" >> ~/.npmrc`);
 
 
     // make sure the branch is upto date with master
