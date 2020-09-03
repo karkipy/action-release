@@ -10,7 +10,7 @@ const OWNER = process.env.PACKAGE_SCOPE || 'bhoos';
 
 async function createRelease(repoName,tag, name, body, token) {
   const octokit = new Octokit({
-    auth: PERSONAL_ACCESS_TOKEN,
+    auth: token,
   });
   await octokit.repos.createRelease({
     owner: OWNER,
