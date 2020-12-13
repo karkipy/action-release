@@ -1,12 +1,12 @@
 {
-  "name": "bhoos-package-action",
+  "name": "action-release",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo test",
     "build": "echo build"
   },
-  "repository": "git@github.com:karkipy/bhoos-package-action.git",
+  "repository": "git@github.com:karkipy/action-release.git",
   "author": "Aashish Karki <aashish.y2z@gmail.com>",
   "license": "MIT",
   "dependencies": {

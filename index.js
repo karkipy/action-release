@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 const { chdir } = require('process');
 
 const NPM_PKG_GITHUB_TOKEN = process.env.NPM_PKG_GITHUB_TOKEN;
-const OWNER = process.env.PACKAGE_SCOPE || 'bhoos';
+const OWNER = process.env.PACKAGE_SCOPE || 'karkipy';
 
 async function createRelease(repoName,tag, name, body, token) {
   const octokit = new Octokit({
@@ -27,7 +27,7 @@ function getPackageProperty(property) {
 
 function setupNPMRC(token) {
     // setup  npmrc
-    execSync(`echo "//npm.pkg.github.com/bhoos/:_authToken=${token}" > ~/.npmrc`);
+    execSync(`echo "//npm.pkg.github.com/karkipy/:_authToken=${token}" > ~/.npmrc`);
     execSync(`echo "//npm.pkg.github.com/:_authToken=${token}" >> ~/.npmrc`);
     execSync(`echo "@${OWNER}:registry=https://npm.pkg.github.com/" >> ~/.npmrc`);
 }
@@ -45,8 +45,8 @@ try {
 
 
   execSync(`curl -H 'Authorization: token ${GITHUB_TOKEN}' ${html_url}`)
-  execSync(`git config --global user.email action@bhoos.com`);
-  execSync(`git config --global user.name 'Bhoos Action'`);
+  execSync(`git config --global user.email action@karkipy.com`);
+  execSync(`git config --global user.name 'Github  Action'`);
   execSync(`git clone ${gitURL}`)
   chdir(`${name}`);
   execSync('git config pull.ff only');
