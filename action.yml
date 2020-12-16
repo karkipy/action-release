@@ -1,4 +1,4 @@
-name: 'bhoos package action'
+name: 'package action'
 description: 'action that updates version and pushes to master and the minor | patch version'
 inputs:
   token:

@@ -19,4 +19,7 @@
       steps:
         - name: Use release action
           uses: karkipy/action-release
+          env:
+            NPM_PKG_GITHUB_TOKEN: ${{ secrets.NPM_PKG_GITHUB_TOKEN }}
+            PACKAGE_SCOPE: ${{ secrets.PACKAGE_SCOPE }}
 ```
