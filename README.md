@@ -5,7 +5,7 @@
 
 ## Example usage
 
-```bash
+```yml
   on:
     push:
       branches:
@@ -18,7 +18,7 @@
       runs-on: ubuntu-latest
       steps:
         - name: Use release action
-          uses: karkipy/action-release
+          uses: karkipy/action-release@v1
           env:
             NPM_PKG_GITHUB_TOKEN: ${{ secrets.NPM_PKG_GITHUB_TOKEN }}
             PACKAGE_SCOPE: ${{ secrets.PACKAGE_SCOPE }}
